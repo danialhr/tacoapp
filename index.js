@@ -1,22 +1,29 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var ejsLayouts = require('express-ejs-layouts');
-var morgan = require('morgan');
-var db = require('./models');
-var app = express();
+var express = require('express')
+var bodyParser = require('body-parser')
+var morgan = require('morgan')
+var ejsLayouts = require('express-ejs-layouts')
+var mongoose = require('mongoose')
+var path = require('path')
+var dotEnv = require('dotenv')
+var app = express()
 
-app.set('view engine', 'ejs');
-app.use(require('morgan')('dev'));
-app.use(ejsLayouts);
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static(__dirname + '/public/'));
+dotEnv.config({ silent: true })
+mongoose.connect(process.env.DATABASE_URL)
 
-app.get('/', function(req, res) {
-  res.render('index');
-});
+app.set('view engine', 'ejs')
+app.use(morgan('dev'))
+app.use(ejsLayouts)
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/tacos', require('./controllers/tacos'));
+app.get('/', function (req, res) {
+  res.render('index')
+})
 
-var server = app.listen(process.env.PORT || 3000);
+app.use('/tacos', require('./controllers/tacos_controller'))
 
-module.exports = server;
+var server = app.listen(process.env.PORT || 3000, function(){
+  console.log('Server UP')
+})
+
+module.exports = server
