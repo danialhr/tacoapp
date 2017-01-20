@@ -8,7 +8,7 @@ var dotEnv = require('dotenv')
 var app = express()
 
 dotEnv.config({ silent: true })
-mongoose.connect(process.env.DATABASE_URL)
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mydbname')
 
 app.set('view engine', 'ejs')
 app.use(morgan('dev'))
