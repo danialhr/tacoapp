@@ -4,10 +4,8 @@ var morgan = require('morgan')
 var ejsLayouts = require('express-ejs-layouts')
 var mongoose = require('mongoose')
 var path = require('path')
-var dotEnv = require('dotenv')
 var app = express()
 
-dotEnv.config({ silent: true })
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mydbname')
 
 app.set('view engine', 'ejs')
