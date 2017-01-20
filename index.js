@@ -22,8 +22,7 @@ app.get('/', function (req, res) {
 
 app.use('/tacos', require('./controllers/tacos_controller'))
 
-var server = app.listen(process.env.PORT || 3000, function(){
-  console.log('Server UP')
-})
+var server = app.listen(process.env.PORT || 3000)
+console.log('Server Listing')
 
 module.exports = server
